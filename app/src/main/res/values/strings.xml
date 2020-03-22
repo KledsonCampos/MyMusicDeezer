@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Music Deezer</string>
+    <string name="message_loanding">Carregando…</string>
+    <string name="error_loading">Erro ao carregar a lista de Album</string>
+    <string name="error_loading_Track_Lista">Erro ao Carregar Lista de Tracks</string>
+    <string name="tab_albums">Albums</string>
+    <string name="tab_favorites">Favoritos</string>
+</resources>
