@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.music.R
@@ -15,11 +17,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.Track
 import model.TrackListHttp
+import repository.AlbumRepository
+import ui.viewmodel.AlbumDetailViewModel
+import ui.viewmodel.AlbumVmFactory
 import model.Album as Album
 import ui.viewmodel.TracksListViewModel
 import ui.adapter.TrackListAdapter as TrackListAdapter
 
 class AlbumDetailActivity : AppCompatActivity() {
+    private val viewModel: AlbumDetailViewModel by lazy {
+        ViewModelProvider(
+            this,
+            AlbumVmFactory(
+                AlbumRepository(this)
+            )
+        ).get(AlbumDetailViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,19 +41,33 @@ class AlbumDetailActivity : AppCompatActivity() {
         val album = intent.getParcelableExtra<Album>(EXTRA_ALBUM)
         if (album != null) {
 
-              if (album.artist?.picture_big?.isNotEmpty() == true){
-                  Picasso.get()
-                      .load(album.artist?.picture_big).into(
-                          imageView
-                      )
-              } else {
-                  imageView.setImageResource(R.drawable.ic_image_black)
-              }
-           // txtDiscografia.text = "Album: " + album.title ?: ""
-            txtAuthor.text =  album.artist?.name ?: ""
-            // holder.txtAlbum.text = "Number Tracks: "+data.nb_tracks?:""
-            // holder.txtType.text = "Type: "+data.record_type?:""
+            if (album.artist?.picture_big?.isNotEmpty() == true) {
+                Picasso.get()
+                    .load(album.artist?.picture_big).into(
+                        imageView
+                    )
+            } else {
+                imageView.setImageResource(R.drawable.ic_image_black)
+            }
+            txtAuthor.text = album.artist?.name ?: ""
 
+            viewModel.isfavorite.observe(
+                this,
+                Observer { isFavorite ->
+                    if (isFavorite) {
+                        fabFavorite.setImageResource(R.drawable.ic_delete)
+                        fabFavorite.setOnClickListener {
+                            viewModel.removeFromFavorite(album)
+                        }
+                    } else {
+                        fabFavorite.setImageResource(R.drawable.ic_add)
+                        fabFavorite.setOnClickListener {
+                            viewModel.saveToFavorite(album)
+                        }
+                    }
+                }
+            )
+            viewModel.onCreate(album)
         } else {
             finish()
         }

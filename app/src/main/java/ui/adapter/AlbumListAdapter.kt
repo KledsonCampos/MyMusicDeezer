@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.item_album.view.txtTracksNumber
 import kotlinx.android.synthetic.main.item_album.view.txtTitle
 import model.Album
 
+
 class AlbumListAdapter(
-   private val items: List<Album>,
+    private val items: List<Album>,
     private val onItemClick: (Album) -> Unit
 ) : RecyclerView.Adapter<AlbumListAdapter.AlbumHolder>() {
 

@@ -6,7 +6,7 @@ import java.io.Serializable
 
 @Parcelize
 data class Album(
-    val id: String?,
+    val id: String,
     val title: String?,
     val cover: String?,
     val cover_small: String?,
