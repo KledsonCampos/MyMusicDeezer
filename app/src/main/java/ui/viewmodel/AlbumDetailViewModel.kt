@@ -4,30 +4,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import model.Album
 import repository.AlbumRepository
 
 class AlbumDetailViewModel(
     private val repository: AlbumRepository
-): ViewModel() {
+) : ViewModel() {
     private val _isFavorite = MutableLiveData<Boolean>()
     val isfavorite: LiveData<Boolean> = _isFavorite
 
-    fun onCreate(album: Album){
+    fun onCreate(album: Album) {
         viewModelScope.launch {
             _isFavorite.value = repository.isFavolite(album.id)
         }
     }
 
-    fun saveToFavorite(album: Album){
+    fun saveToFavorite(album: Album) {
         viewModelScope.launch {
-            repository.save(album)
+            withContext(Dispatchers.IO) {
+                repository.save(album)
+            }
             _isFavorite.value = repository.isFavolite(album.id)
         }
     }
 
-    fun removeFromFavorite(album: Album){
+    fun removeFromFavorite(album: Album) {
         viewModelScope.launch {
             repository.delete(album)
             _isFavorite.value = repository.isFavolite(album.id)

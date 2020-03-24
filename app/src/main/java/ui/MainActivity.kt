@@ -24,14 +24,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        setSupportActionBar(toolbar)
         viewPager.adapter = AlbumPagerAdapter(this)
-        TabLayoutMediator(tablayout, viewPager){tab, position ->
+        TabLayoutMediator(tablayout, viewPager) { tab, position ->
             tab.setText(
-            if (position == 0)
-                R.string.tab_albums
-            else
-                R.string.tab_favorites
+                if (position == 0)
+                    R.string.tab_albums
+                else
+                    R.string.tab_favorites
             )
         }.attach()
 

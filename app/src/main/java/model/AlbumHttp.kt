@@ -7,7 +7,8 @@ import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 object AlbumHttp {
-    private const val URI = "https://api.deezer.com/search/album?q=eminem"
+    private const val URI = "https://api.deezer.com/search/album?q=%s"
+    //"https://api.deezer.com/search/album?q=eminem"
     //private const val URI = "https://api.deezer.com/search?q=artist:%s"
     private const val Filter = ""
    // private const val Filter = "&?ARTIST_DESC&index=0"

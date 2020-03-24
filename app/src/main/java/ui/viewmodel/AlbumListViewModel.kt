@@ -19,23 +19,26 @@ class AlbumListViewModel : ViewModel() {
 
     fun loanAlbums() {
         if (_state.value != null) return
+        search("eminem")
+    }
 
+    fun search(query: String) {
         viewModelScope.launch {
             _state.value = State.Loanding
             val result = withContext(Dispatchers.IO) {
-                AlbumHttp.searchAlbum("eminem")
+                AlbumHttp.searchAlbum(query)
             }
-            if (result?.data == null){
-                _state.value = State.Error(Exception("Erro Loandding Album"),false)
+            if (result?.data == null) {
+                _state.value = State.Error(Exception("Erro Loandding Album"), false)
             } else {
                 _state.value = State.Loaded(result.data)
             }
         }
     }
 
-    sealed class State{
-        object Loanding: State()
-        data class Loaded(val items: List<Album>):State()
-        data class Error(val e: Throwable, var hasConsumer: Boolean):State()
+    sealed class State {
+        object Loanding : State()
+        data class Loaded(val items: List<Album>) : State()
+        data class Error(val e: Throwable, var hasConsumer: Boolean) : State()
     }
 }

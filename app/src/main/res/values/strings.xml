@@ -5,4 +5,6 @@
     <string name="error_loading_Track_Lista">Erro ao Carregar Lista de Tracks</string>
     <string name="tab_albums">Albums</string>
     <string name="tab_favorites">Favoritos</string>
+    <string name="search_hint">Buscar Album por Autor</string>
+    <string name="view_album_web">Visualizar album na web</string>
 </resources>

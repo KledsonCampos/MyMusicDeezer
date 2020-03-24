@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.music.R
+import kotlinx.android.synthetic.main.fragment_album_list.*
 import kotlinx.android.synthetic.main.fragment_list.recycleView
 import model.Track
 import ui.TrackListActivity
@@ -43,7 +45,11 @@ class TracksListaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val layoutManager = LinearLayoutManager(requireContext())
         recycleView.layoutManager = LinearLayoutManager(requireContext())
+        recycleView.addItemDecoration(
+            DividerItemDecoration(requireContext(),layoutManager.orientation)
+        )
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is TracksListViewModel.State.Loanding -> {

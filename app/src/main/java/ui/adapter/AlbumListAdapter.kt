@@ -32,9 +32,9 @@ class AlbumListAdapter(
 
     override fun onBindViewHolder(holder: AlbumHolder, position: Int) {
         val data = items[position]
-        if (data.cover?.isNotEmpty() == true){
+        if (data.cover_medium?.isNotEmpty() == true){
             Picasso.get()
-                .load(data.cover).into(
+                .load(data.cover_medium).into(
                     holder.imgAlbum
                 )
         } else {
